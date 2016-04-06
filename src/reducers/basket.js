@@ -12,8 +12,20 @@ const initialState = {
   total: 0
 }
 
+const twoForOne = item => (
+  item.amount % 2 === 0
+    ? item.amount / 2 * item.price
+    : ((item.amount - 1) / 2 * item.price) + item.price
+)
+const regular = item => item.price * item.amount
+
 const getTotalExcludingShipping = (items) => {
-  return Object.keys(items).reduce((sum, itemKey) => sum + items[itemKey].price * items[itemKey].amount, 0)
+  return Object.keys(items).reduce((sum, itemKey) => {
+    const item = items[itemKey]
+    const itemCost = item.offer === '2for1' ? twoForOne(item) : regular(item)
+
+    return sum + itemCost
+  }, 0)
 }
 
 // Note: Spec doesn't specify what happens for orders of exactly £90.
