@@ -17,11 +17,16 @@ const twoForOne = item => (
     ? item.amount / 2 * item.price
     : ((item.amount - 1) / 2 * item.price) + item.price
 )
+const secondHalfPrice = item => (
+  item.amount % 2 === 0
+    ? ((item.amount / 2) * item.price) + ((item.amount / 2) * (item.price / 2))
+    : (((item.amount - 1) / 2) * item.price) + (((item.amount - 1) / 2) * (item.price / 2)) + item.price
+)
 const regular = item => item.price * item.amount
 
 const getTotalExcludingShipping = items => Object.keys(items).reduce((sum, itemKey) => {
   const item = items[itemKey]
-  const itemCost = item.offer === '2for1' ? twoForOne(item) : regular(item)
+  const itemCost = item.offer === 'secondHalfPrice' ? secondHalfPrice(item) : regular(item)
 
   return sum + itemCost
 }, 0)
