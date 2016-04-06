@@ -1,7 +1,10 @@
-import { combineReducers } from 'redux';
+import { combineReducers } from 'redux'
+import basket  from './basket'
+import catalog  from './catalog'
 
 const rootReducer = combineReducers({
-  state: (state = {}) => state
-});
+  catalog,
+  basket
+})
 
-export default rootReducer;
+export default rootReducer
