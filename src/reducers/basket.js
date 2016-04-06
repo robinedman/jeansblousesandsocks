@@ -12,23 +12,43 @@ const initialState = {
   total: 0
 }
 
-const calculateTotal = (items) => {
+const getTotalExcludingShipping = (items) => {
   return Object.keys(items).reduce((sum, itemKey) => sum + items[itemKey].price * items[itemKey].amount, 0)
 }
+
+// Note: Spec doesn't specify what happens for orders of exactly £90.
+// Making it free.
+const getShipping = (cost) => {
+  if (cost < 50) return 4.95
+  if (cost < 90) return 2.95
+  return 0
+}
+
+const getTotal = (items) => {
+  const totalExcludingShipping = getTotalExcludingShipping(items)
+  const shipping = getShipping(totalExcludingShipping)
+}
+
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case 'ADD_ITEM':
-      let newBasketItemsState = { ...state.items }
-      newBasketItemsState[action.item.id] = {
+      let newItemsState = { ...state.items }
+      newItemsState[action.item.id] = {
         ...action.item,
         amount: (state.items[action.item.id] && state.items[action.item.id].amount || 0) + 1
-
       }
+
+      const totalExcludingShipping = getTotalExcludingShipping(newItemsState)
+      const shipping = getShipping(totalExcludingShipping)
+      const total = totalExcludingShipping + shipping
+
       return {
         ...state,
-        items: newBasketItemsState,
-        total: calculateTotal(newBasketItemsState)
+        items: newItemsState,
+        totalExcludingShipping,
+        shipping,
+        total,
       }
     default:
       return state
