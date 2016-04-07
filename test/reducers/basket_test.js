@@ -21,34 +21,36 @@ describe('basket reducer', () => {
   })
 
   it('ADD_ITEM correctly adds 1 item', () => {
-    const oneItemBasket = basket(undefined, {
+    const initialBasket = undefined
+    const newBasket = basket(initialBasket, {
       type: 'ADD_ITEM',
       item: catalog['S01']
     })
 
-    expect(oneItemBasket.items).to.eql({
+    expect(newBasket.items).to.eql({
       'S01': {
         ...catalog['S01'],
         amount: 1
       }
     })
-    expect(formatMoney(oneItemBasket.total)).to.eql('£12.90')
+    expect(formatMoney(newBasket.total)).to.eql('£12.90')
   })
 
   it('ADD_ITEM S01, B01', () => {
-    const socksAndBlouseBasket = basket({
+    const initialBasket = {
       items: {
         'S01': {
           ...catalog['S01'],
           amount: 1
         }
       }
-    }, {
+    }
+    const newBasket = basket(initialBasket, {
       type: 'ADD_ITEM',
       item: catalog['B01']
     })
 
-    expect(socksAndBlouseBasket.items).to.eql({
+    expect(newBasket.items).to.eql({
       'S01': {
         amount: 1,
         id: 'S01',
@@ -60,46 +62,47 @@ describe('basket reducer', () => {
         amount: 1
       }
     })
-    expect(formatMoney(socksAndBlouseBasket.total)).to.eql('£37.85')
+    expect(formatMoney(newBasket.total)).to.eql('£37.85')
   })
 
   it('ADD_ITEM J01, J01', () => {
-    const jeansBasket = basket({
+    const initialBasket = {
       items: {
         'J01': {
           ...catalog['J01'],
           amount: 1
         }
       }
-    }, {
+    }
+    const newBasket = basket(initialBasket, {
       type: 'ADD_ITEM',
       item: catalog['J01']
     })
 
-    expect(jeansBasket.items).to.eql({
+    expect(newBasket.items).to.eql({
       'J01': {
         ...catalog['J01'],
         amount: 2
       }
     })
-    expect(formatMoney(jeansBasket.total)).to.eql('£54.37')
+    expect(formatMoney(newBasket.total)).to.eql('£54.37')
   })
 
   it('ADD_ITEM J01, B01', () => {
-    // J01, B01
-    const jeansAndBlouseBasket = basket({
+    const initialBasket = {
       items: {
         'J01': {
           ...catalog['J01'],
           amount: 1
         }
       },
-    }, {
+    }
+    const newBasket = basket(initialBasket, {
       type: 'ADD_ITEM',
       item: catalog['B01']
     })
 
-    expect(jeansAndBlouseBasket.items).to.eql({
+    expect(newBasket.items).to.eql({
       'J01': {
         ...catalog['J01'],
         amount: 1
@@ -109,11 +112,11 @@ describe('basket reducer', () => {
         amount: 1
       },
     })
-    expect(formatMoney(jeansAndBlouseBasket.total)).to.eql('£60.85')
+    expect(formatMoney(newBasket.total)).to.eql('£60.85')
   })
 
   it('ADD_ITEM S01, S01, J01, J01, J01', () => {
-    const doubleSocksTripleJeansBasket = basket({
+    const initialBasket = {
       items: {
         'S01': {
           ...catalog['S01'],
@@ -124,12 +127,13 @@ describe('basket reducer', () => {
           amount: 2
         }
       }
-    }, {
+    }
+    const newBasket = basket(initialBasket, {
       type: 'ADD_ITEM',
       item: catalog['J01']
     })
 
-    expect(doubleSocksTripleJeansBasket.items).to.eql({
+    expect(newBasket.items).to.eql({
       'S01': {
         ...catalog['S01'],
         amount: 2
@@ -139,7 +143,7 @@ describe('basket reducer', () => {
         amount: 3
       },
     })
-    expect(formatMoney(doubleSocksTripleJeansBasket.total)).to.eql('£98.27')
+    expect(formatMoney(newBasket.total)).to.eql('£98.27')
   })
 
 })
