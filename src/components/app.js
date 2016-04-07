@@ -6,8 +6,8 @@ import Catalog from './Catalog'
 export default class App extends Component {
   render() {
     return (
-      <div>
-        <h1>jeansblousesandsocks</h1>
+      <div className="Main">
+        <h1 className="Main-title">jeansblousesandsocks</h1>
         <Catalog />
         <Basket />
       </div>

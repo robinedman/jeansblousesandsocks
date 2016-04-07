@@ -10,9 +10,9 @@ const mapDispatchToProps = (dispatch) => ({
 
 let Basket = ({ basket, removeItem }) => {
   const renderItem = item => (
-    <li key={item.id}>
+    <li className="Basket-item" key={item.id}>
       {item.amount} {item.product} {formatMoney(item.price)}
-      <button onClick={() => removeItem(item)}>Remove</button>
+      <button className="Basket-item-remove" onClick={() => removeItem(item)}>x</button>
     </li>
   )
 
@@ -23,15 +23,17 @@ let Basket = ({ basket, removeItem }) => {
   )
 
   return (
-    <div>
-      <b>Basket</b>
-      <ul>
+    <div className="Basket">
+      <h2>Basket</h2>
+      <ul className="Basket-items">
         {renderItems(basket.items)}
       </ul>
 
-      <p>Total excluding shipping: <strong>{formatMoney(basket.totalExcludingShipping)}</strong></p>
-      <p>Shipping: <strong>{formatMoney(basket.shipping)}</strong></p>
-      <p>Total: <strong>{formatMoney(basket.total)}</strong></p>
+      <div className="Basket-cost">
+        <p>Total excluding shipping: <strong>{formatMoney(basket.totalExcludingShipping)}</strong></p>
+        <p>Shipping: <strong>{formatMoney(basket.shipping)}</strong></p>
+        <p>Total: <strong>{formatMoney(basket.total)}</strong></p>
+      </div>
     </div>
   )
 }

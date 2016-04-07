@@ -10,27 +10,17 @@ const mapDispatchToProps = (dispatch) => ({
 
 let Catalog = ({ catalog, addItem }) => {
   const renderItem = (item) => (
-    <li key={item.id}>
-      <button onClick={() => addItem(item)}>
-        <strong>{item.product}</strong> {formatMoney(item.price)}
-      </button>
-    </li>
+    <div key={item.id}
+         onClick={() => addItem(item)}
+         className={`Catalog-item-${item.product.toLowerCase()}`}>
+        <span className="Catalog-item-price">{formatMoney(item.price)}</span>
+    </div>
   )
 
-  const renderItems = () => (
-    <ul>
-      {
-        Object.keys(catalog).map(itemId => {
-          const item = catalog[itemId]
-          return renderItem(item)
-        })
-      }
-    </ul>
-  )
+  const renderItems = () => Object.keys(catalog).map(itemId => renderItem(catalog[itemId]))
 
   return (
-    <div>
-      <b>Catalog</b>
+    <div className="Catalog">
       {renderItems()}
     </div>
   )

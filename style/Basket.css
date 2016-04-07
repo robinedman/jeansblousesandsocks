@@ -1,0 +1,19 @@
+.Basket {
+  width: 300px;
+}
+
+.Basket-items {
+  margin: 5px;
+}
+
+.Basket-item {
+
+}
+
+.Basket-item-remove {
+  margin-left: 5px;
+}
+
+.Basket-cost {
+  margin-top: 30px;
+}

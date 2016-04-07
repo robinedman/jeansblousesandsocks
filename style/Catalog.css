@@ -1,0 +1,44 @@
+.Catalog {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  margin-bottom: 30px;
+}
+
+.Catalog-item-price {
+  background-color: black;
+  color: #B0B0BB;
+  padding: 2px;
+}
+
+.Catalog-item-jeans {
+  background-image: url("/images/catalog/jeans.jpg");
+  display: flex;
+  align-items: flex-end;
+  background-size: cover;
+  width: 160px;
+  height: 150px;
+  cursor: pointer;
+}
+
+.Catalog-item-socks {
+  background-image: url("/images/catalog/socks.jpg");
+  display: flex;
+  align-items: flex-end;
+  background-size: cover;
+  width: 160px;
+  height: 150px;
+  cursor: pointer;
+}
+
+.Catalog-item-blouse {
+  background-image: url("/images/catalog/blouse.jpg");
+  display: flex;
+  align-items: flex-end;
+  background-size: cover;
+  width: 160px;
+  height: 150px;
+  cursor: pointer;
+}
