@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import { addItem } from '../actions/basketActions'
+import formatMoney from '../helpers/formatMoney'
 
 const mapStateToProps = ({ catalog }) => ({ catalog })
 const mapDispatchToProps = (dispatch) => ({
@@ -11,7 +12,7 @@ let Catalog = ({ catalog, addItem }) => {
   const renderItem = (item) => (
     <li key={item.id}>
       <button onClick={() => addItem(item)}>
-        <strong>{item.product}</strong> £{item.price}
+        <strong>{item.product}</strong> {formatMoney(item.price)}
       </button>
     </li>
   )

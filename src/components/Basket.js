@@ -4,14 +4,32 @@ import formatMoney from '../helpers/formatMoney'
 
 const mapStateToProps = ({ basket }) => ({ basket })
 
-let Basket = ({ basket }) => (
-  <div>
-    <b>Basket</b>
+let Basket = ({ basket }) => {
+  const renderItem = item => (
+    <li key={item.id}>
+      {item.amount} {item.product} {formatMoney(item.price)}
+    </li>
+  )
 
-    <p>£{formatMoney(basket.total)}</p>
-    <div>{JSON.stringify(basket)}</div>
-  </div>
-)
+  const renderItems = items => (
+    <ul>
+      { Object.keys(items).map(itemKey => renderItem(items[itemKey])) }
+    </ul>
+  )
+
+  return (
+    <div>
+      <b>Basket</b>
+      <ul>
+        {renderItems(basket.items)}
+      </ul>
+
+      <p>Total excluding shipping: <strong>{formatMoney(basket.totalExcludingShipping)}</strong></p>
+      <p>Shipping: <strong>{formatMoney(basket.shipping)}</strong></p>
+      <p>Total: <strong>{formatMoney(basket.total)}</strong></p>
+    </div>
+  )
+}
 Basket = connect(mapStateToProps, null)(Basket)
 
 export default Basket
