@@ -146,4 +146,47 @@ describe('basket reducer', () => {
     expect(formatMoney(newBasket.total)).to.eql('£98.27')
   })
 
+
+  it('REMOVE_ITEM amount 1', () => {
+    const initialBasket = {
+      items: {
+        'S01': {
+          ...catalog['S01'],
+          amount: 1
+        }
+      }
+    }
+    const newBasket = basket(initialBasket, {
+      type: 'REMOVE_ITEM',
+      item: catalog['S01']
+    })
+
+    expect(newBasket.items).to.eql({})
+    expect(formatMoney(newBasket.total)).to.eql('£0.00')
+  })
+
+
+  it('REMOVE_ITEM amount 2', () => {
+    const initialBasket = {
+      items: {
+        'S01': {
+          ...catalog['S01'],
+          amount: 2
+        }
+      }
+    }
+    const newBasket = basket(initialBasket, {
+      type: 'REMOVE_ITEM',
+      item: catalog['S01']
+    })
+
+    expect(newBasket.items).to.eql({
+      'S01': {
+        ...catalog['S01'],
+        amount: 1
+      }
+    })
+    expect(formatMoney(newBasket.total)).to.eql('£12.90')
+  })
+
 })
