@@ -1,13 +1,18 @@
-import React from 'react';
+import React from 'react'
 import { connect } from 'react-redux'
+import { removeItem } from '../actions/basketActions'
 import formatMoney from '../helpers/formatMoney'
 
 const mapStateToProps = ({ basket }) => ({ basket })
+const mapDispatchToProps = (dispatch) => ({
+  removeItem: (...args) => dispatch(removeItem(...args)),
+})
 
-let Basket = ({ basket }) => {
+let Basket = ({ basket, removeItem }) => {
   const renderItem = item => (
     <li key={item.id}>
       {item.amount} {item.product} {formatMoney(item.price)}
+      <button onClick={() => removeItem(item)}>Remove</button>
     </li>
   )
 
@@ -30,6 +35,6 @@ let Basket = ({ basket }) => {
     </div>
   )
 }
-Basket = connect(mapStateToProps, null)(Basket)
+Basket = connect(mapStateToProps, mapDispatchToProps)(Basket)
 
 export default Basket
