@@ -9,7 +9,7 @@ const catalog = {
 }
 
 describe('basket reducer', () => {
-  it('should return the initial state', () => {
+  it('returns the initial state', () => {
     expect(
       basket(undefined, {})
     ).to.eql(
@@ -20,8 +20,7 @@ describe('basket reducer', () => {
     )
   })
 
-  it('should handle ADD_ITEM', () => {
-    // Add one item to empty basket.
+  it('ADD_ITEM correctly adds 1 item', () => {
     const oneItemBasket = basket(undefined, {
       type: 'ADD_ITEM',
       item: catalog['S01']
@@ -34,9 +33,9 @@ describe('basket reducer', () => {
       }
     })
     expect(formatMoney(oneItemBasket.total)).to.eql('£12.90')
+  })
 
-
-    // S01, B01
+  it('ADD_ITEM S01, B01', () => {
     const socksAndBlouseBasket = basket({
       items: {
         'S01': {
@@ -62,9 +61,9 @@ describe('basket reducer', () => {
       }
     })
     expect(formatMoney(socksAndBlouseBasket.total)).to.eql('£37.85')
+  })
 
-
-    // J01, J01
+  it('ADD_ITEM J01, J01', () => {
     const jeansBasket = basket({
       items: {
         'J01': {
@@ -84,8 +83,9 @@ describe('basket reducer', () => {
       }
     })
     expect(formatMoney(jeansBasket.total)).to.eql('£54.37')
+  })
 
-
+  it('ADD_ITEM J01, B01', () => {
     // J01, B01
     const jeansAndBlouseBasket = basket({
       items: {
@@ -110,10 +110,9 @@ describe('basket reducer', () => {
       },
     })
     expect(formatMoney(jeansAndBlouseBasket.total)).to.eql('£60.85')
+  })
 
-
-
-    // // S01, S01, J01, J01, J01
+  it('ADD_ITEM S01, S01, J01, J01, J01', () => {
     const doubleSocksTripleJeansBasket = basket({
       items: {
         'S01': {
@@ -141,8 +140,6 @@ describe('basket reducer', () => {
       },
     })
     expect(formatMoney(doubleSocksTripleJeansBasket.total)).to.eql('£98.27')
-
-
-
   })
+
 })
