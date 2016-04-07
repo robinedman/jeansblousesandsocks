@@ -24,6 +24,7 @@ export const getTotalExcludingShipping = items => Object.keys(items).reduce((sum
 // Note: Spec doesn't specify what happens for orders of exactly £90.
 // Making it free.
 export const getShipping = cost => {
+  if (!cost) return 0
   if (cost < 50) return 4.95
   if (cost < 90) return 2.95
   return 0

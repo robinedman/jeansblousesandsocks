@@ -18,18 +18,19 @@ const initialState = {
 }
 
 export default (state = initialState, action) => {
-  let newItemsState
+  const newItemsState = { ...state.items }
+  let totalExcludingShipping, shipping, total
+
   switch (action.type) {
     case 'ADD_ITEM':
-      newItemsState = { ...state.items }
       newItemsState[action.item.id] = {
         ...action.item,
         amount: (state.items[action.item.id] && state.items[action.item.id].amount || 0) + 1
       }
 
-      const totalExcludingShipping = getTotalExcludingShipping(newItemsState)
-      const shipping = getShipping(totalExcludingShipping)
-      const total = totalExcludingShipping + shipping
+      totalExcludingShipping = getTotalExcludingShipping(newItemsState)
+      shipping = getShipping(totalExcludingShipping)
+      total = totalExcludingShipping + shipping
 
       return {
         ...state,
@@ -39,14 +40,20 @@ export default (state = initialState, action) => {
         total,
       }
     case 'REMOVE_ITEM':
-      newItemsState = { ...state.items }
       newItemsState[action.item.id] && newItemsState[action.item.id].amount > 1
         ? newItemsState[action.item.id].amount = newItemsState[action.item.id].amount - 1
         : delete newItemsState[action.item.id]
 
+        totalExcludingShipping = getTotalExcludingShipping(newItemsState)
+        shipping = getShipping(totalExcludingShipping)
+        total = totalExcludingShipping + shipping
+
       return {
         ...state,
         items: newItemsState,
+        totalExcludingShipping,
+        shipping,
+        total,
       }
     default:
       return state
